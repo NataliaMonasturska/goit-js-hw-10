@@ -8,30 +8,35 @@ const countryUl = document.querySelector('ul.country-list')
 const countryInfo = document.querySelector('.country-info')
 
 const DEBOUNCE_DELAY = 300;
-let country = '';
 
 
+input.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY))
 
-
-input.addEventListener('input', debounce((e) => {
-  country = input.value.trim();
+function onInput() {
     countryInfo.innerHTML = '';
-      countryUl.innerHTML = '';
+    countryUl.innerHTML = '';
+   let country = input.value.trim();
   if (country === '') {
-    
     return
-  
-
   } 
-    console.log(country);
-  fetchCountries(country).then(data => {
-  
-    console.log(data);
-
-    if (data.length > 10)
-    Notiflix.Notify.info("Too many matches found. Please enter a more specific name.");
+  fetchCountries(country)
+    .then(data => {
+    if (data.length > 10) {
+      Notiflix.Notify.info("Too many matches found. Please enter a more specific name.");
+    }
     if (data.length >= 2 && data.length <= 10) {
-      const markup = data.map(({ flag, name }) => 
+      makeListCountries(data);
+    }
+    if (data.length === 1) {
+      makeOneCountries(data);
+    }
+  })
+  .catch(error => {
+  Notiflix.Notify.failure("Oops, there is no country with that name");
+  });
+}
+function makeHtmlListCountries(data) {
+ return data.map(({ flag, name }) => 
          `<li>
         <img src=${flag}
         alt="flag"
@@ -39,13 +44,13 @@ input.addEventListener('input', debounce((e) => {
         height="auto">
         <div><p>${name}</p></div></li>`
       ).join(""); 
-      countryUl.insertAdjacentHTML('beforeend', markup);
-      
-    }
-    if (data.length === 1) {
-    
-        countryUl.innerHTML = '';
-        const oneCountry = data.map(({ name, capital, population, flag, languages }) => 
+}
+function makeListCountries(data) {
+   const markup = makeHtmlListCountries(data);
+   countryUl.insertAdjacentHTML('beforeend', markup); 
+}
+function makeHtmlOneCountries(data){
+ return data.map(({ name, capital, population, flag, languages }) => 
         `
         <div class="div-flex">
         <img src=${flag}
@@ -68,19 +73,9 @@ input.addEventListener('input', debounce((e) => {
         </ul>
         `
       ).join(""); 
+}
+ function makeOneCountries(data) {
+    const oneCountry = makeHtmlOneCountries(data);
       countryInfo.insertAdjacentHTML('beforeend', oneCountry);
-    }
-       
-  })
-  .catch(error => {
-  Notiflix.Notify.failure("Oops, there is no country with that name");
-  });
-},DEBOUNCE_DELAY))
-
-// const ulGallery = document.querySelector("ul.gallery");
-// const gallery = images.map(({ url, alt }) => 
-//   `<li class="item-gallery">
-//   <img class="image-gallery" src=${url} alt ="${alt}" width="300" height="180" />
-// </li>`
-// ).join("");
-// ulGallery.insertAdjacentHTML("afterbegin", gallery);
+} 
+ 
