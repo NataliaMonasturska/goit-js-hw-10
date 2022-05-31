@@ -18,3 +18,58 @@ body {
   max-width: 320px;
   margin-bottom: 16px;
 }
+ul {
+  padding: 0px;
+  margin: 0px;
+}
+li {
+  height: 30px;
+  list-style: none;
+  display: flex;
+
+  margin-bottom: 5px;
+  align-items: center;
+}
+p {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 20px;
+  margin: 0px;
+  padding-left: 10px;
+  font-weight: normal;
+  line-height: normal;
+}
+h2 {
+ line-height: normal;
+  font-size: 38px;
+  margin: 0;
+  padding-left: 15px;
+  
+}
+.div-flex{
+  display: flex;
+  align-items: center;
+  height: 27px;
+
+  
+}
+.fatty-span{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  padding-right: 5px;
+  line-height: normal;
+}
+.span{
+  line-height: normal;
+  font-size: 20px;
+}
+.country-info{
+  padding-top: 13px;
+}
+.countriData{
+  padding-top: 30px;
+}
+.item-countriData{
+  height: auto;
+  padding-top: 12px;
+}
